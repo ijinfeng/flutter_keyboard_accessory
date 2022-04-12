@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_accessory/keyboard_accessory.dart';
+import 'package:flutter_keyboard_accessory/core/keyboard_accessory.dart';
+import 'package:flutter_keyboard_accessory/core/keyboard_custom.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,14 +20,28 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: Center(
           child: KeyboardAccessory(
-            customAccessory: Container(
-              color: Colors.red,
-              height: 50,
-            ),
+            // customAccessory: Container(
+            //   color: Colors.red,
+            //   height: 50,
+            // ),
+            customAccessory: KeyboardCustomAccessory(builder: () {
+              return TextField();
+            }, height: 44,),
+            onSubmitted: (text) {
+              print("$text");
+            },
             builder: (awake) {
-              return TextButton(onPressed: () {
-                awake();
-            }, child: const Text('唤起键盘'));
+              return Container(
+                height: 200,
+                child: Column(
+                  children: [
+                    TextButton(onPressed: () {
+                      awake();
+            }, child: const Text('唤起键盘')),
+            TextField(cursorColor: const Color(0xffF20000),)
+                  ],
+                ),
+              );
             },
           ),
         ),
